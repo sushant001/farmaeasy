@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
+       xmlns:jee="http://www.springframework.org/schema/jee" 
+	
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-3.1.xsd      
+	http://www.springframework.org/schema/beans   
+ http://www.springframework.org/schema/beans/spring-beans-3.1.xsd    
+	http://www.springframework.org/schema/context     http://www.springframework.org/schema/context/spring-context-3.1.xsd  
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd       
+	
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+     
+    
+
+    <context:component-scan base-package="com.testing.pe" />
+
+    
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.testing.pe.model" />
+        <property name="persistenceUnitName" value="main" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+<!-- 				<prop key="hibernate.c3p0.min_size">1</prop> -->
+<!-- 				<prop key="hibernate.c3p0.max_size">20</prop> -->
+<!-- 				<prop key="hibernate.c3p0.timeout">300</prop> -->
+<!-- 				<prop key="hibernate.c3p0.max_statements">50</prop> -->
+<!-- 				<prop key="hibernate.c3p0.idle_test_period">3000</prop> -->
+			</props>
+		</property>
+
+    </bean>
+
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/poc" />-->
+        <property name="url" value="jdbc:mysql://localhost:3306/fe" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+    
+    
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan">
+            <list>
+                <value>com.testing.pe.model</value>
+            </list>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,40 @@
+<html>
+
+    <head>
+        <title>Angular JS Controller</title>
+        <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="patientController.js"></script>
+        <script src="bs/js/jquery-3.2.0.js"></script>
+        <script src="bs/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="bs/css/bootstrap.css">
+    </head>
+
+    <body>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div ng-app="pharmeasy" ng-controller="patientCtrl"> 
+                    <form>s
+                        <table class="table table-hover">
+                            <tr>
+                                <td>Patient</td>
+                                <td>
+                                    <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="pres.patient"  
+                                            ng-options="y.name for (x,y) in loadPatient" >
+                                    </select>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Description</td><td><input type="text" ng-model="pres.descriptionText"></td>
+                            </tr>
+                        </table>
+                        <input type="submit" value="Save" class="btn btn-primary"  ng-click="save();"/>
+                    </form>
+                </div>
+                <a href="index.html" class="btn btn-info">Home</a>
+                <div class="col-md-2"></div>               
+            </div>
+
+        </div>
+</html>
